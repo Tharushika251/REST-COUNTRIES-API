@@ -70,7 +70,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 
-### IT22077110-----------------------------------------
+### -----------------------------------------------------
+Developer: IT22077110  
+Project: Development of a React Frontend Application Using REST Countries API
+URL of the hosted application: https://Tharushika251.github.io/Rest-countries-API
 
 # Country Explorer - React Application
 
@@ -201,6 +204,3 @@ This creates an optimized build in the `build` folder ready for deployment.
 
 ---
 
-Developer: IT22077110  
-Project: Development of a React Frontend Application Using REST Countries API
-url: 
