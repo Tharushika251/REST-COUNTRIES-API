@@ -15,7 +15,7 @@ const Countries = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [region, setRegion] = useState('');
     const [isLoading, setIsLoading] = useState(true);
-    const { favorites, toggleFavorite } = useContext(AuthContext);
+    const { user, favorites, toggleFavorite } = useContext(AuthContext);
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
@@ -112,6 +112,19 @@ const Countries = () => {
 
     return (
         <>
+            {/* Login Prompt Banner - only shows when user is logged out */}
+            {!user && (
+                <div className="auth-prompt">
+                    <div className="auth-prompt-content">
+                        <i className="fas fa-lock auth-prompt-icon"></i>
+                        <p className="auth-prompt-text">
+                            To save countries to your favorites, please
+                            <Link to="/login" className="auth-prompt-link"> sign in</Link>
+                        </p>
+                    </div>
+                </div>
+            )}
+
             {/* Search and Filter Component */}
             <Filter
                 onSearch={handleSearch}
@@ -143,13 +156,15 @@ const Countries = () => {
                                             Learn more
                                         </Link>
                                         <div className='action-buttons'>
-                                            <button
-                                                className='btn favorite-btn'
-                                                onClick={() => toggleFavorite(cca3)}
-                                                aria-label={favorites.includes(cca3) ? 'Remove from favorites' : 'Add to favorites'}
-                                            >
-                                                <i className={favorites.includes(cca3) ? 'fas fa-heart' : 'far fa-heart'}></i>
-                                            </button>
+                                            {user && (  // Only show if user is logged in
+                                                <button
+                                                    className='btn favorite-btn'
+                                                    onClick={() => toggleFavorite(cca3)}
+                                                    aria-label={favorites.includes(cca3) ? 'Remove from favorites' : 'Add to favorites'}
+                                                >
+                                                    <i className={favorites.includes(cca3) ? 'fas fa-heart' : 'far fa-heart'}></i>
+                                                </button>
+                                            )}
                                             <button className='btn' onClick={() => removeCountry(cca3)}>
                                                 <i className="fas fa-trash-alt"></i>
                                             </button>

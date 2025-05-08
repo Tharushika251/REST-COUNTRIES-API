@@ -90,6 +90,90 @@ img {
   }
 }
 
+/* Auth Prompt Styling - Dark Mode (default) */
+.auth-prompt {
+  background: linear-gradient(135deg, var(--article-color) 0%, hsl(209, 23%, 18%) 100%);
+  border: 1px solid hsl(209, 23%, 15%);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 24px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.auth-prompt-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.auth-prompt-icon {
+  color: hsl(207, 82%, 66%);
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.auth-prompt-text {
+  margin: 0;
+  color: hsl(0, 0%, 85%);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.auth-prompt-link {
+  color: hsl(207, 82%, 66%);
+  font-weight: 600;
+  text-decoration: none;
+  margin: 0 4px;
+  transition: all 0.2s ease;
+}
+
+.auth-prompt-link:hover {
+  color: hsl(207, 82%, 76%);
+  text-decoration: underline;
+}
+
+/* Light Mode Styles */
+.light-theme .auth-prompt {
+  background: linear-gradient(135deg, var(--light-mode-background) 0%, hsl(0, 0%, 95%) 100%);
+  border: 1px solid hsl(0, 0%, 85%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.light-theme .auth-prompt-text {
+  color: var(--light-mode-text);
+}
+
+.light-theme .auth-prompt-icon {
+  color: hsl(221, 68%, 53%);
+}
+
+.light-theme .auth-prompt-link {
+  color: hsl(221, 68%, 53%);
+}
+
+.light-theme .auth-prompt-link:hover {
+  color: hsl(221, 68%, 43%);
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+  .auth-prompt-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .auth-prompt-icon {
+    margin-bottom: 4px;
+  }
+
+  .auth-prompt {
+    margin: 24px 10px;
+  }
+}
+
 /* COUNTRY GRID */
 .grid {
   display: grid;
@@ -163,11 +247,6 @@ img {
   &:hover {
     background-color: #fff;
     color: var(--dark-bg-color);
-  }
-
-  &.favorited {
-    background-color: gold;
-    color: #333;
   }
 }
 
