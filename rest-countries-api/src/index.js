@@ -6,7 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter basename="/Rest_countries_API">
-    <App />
-  </BrowserRouter>
+  <React.StrictMode>
+    <BrowserRouter basename="/Rest-countries-API">
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
 );
