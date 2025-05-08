@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 const Favorites = () => {
-    const { favorites, toggleFavorite } = useContext(AuthContext); // Changed to use toggleFavorite
+    const { user, favorites, toggleFavorite, getFavoriteCountries } = useContext(AuthContext);
     const [favoriteCountries, setFavoriteCountries] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -13,9 +13,7 @@ const Favorites = () => {
                 setIsLoading(true);
                 const response = await fetch('https://restcountries.com/v3.1/all');
                 const data = await response.json();
-                setFavoriteCountries(data.filter(country =>
-                    favorites.includes(country.cca3)
-                ));
+                setFavoriteCountries(getFavoriteCountries(data));
             } catch (error) {
                 console.error('Error fetching favorites:', error);
             } finally {
@@ -23,13 +21,22 @@ const Favorites = () => {
             }
         };
 
-        if (favorites.length > 0) {
+        if (user && favorites.length > 0) {
             fetchFavorites();
         } else {
             setIsLoading(false);
-            setFavoriteCountries([]); // Clear favorites when empty
+            setFavoriteCountries([]);
         }
-    }, [favorites]); // Will re-run when favorites change
+    }, [favorites, user, getFavoriteCountries]);
+
+    if (!user) {
+        return (
+            <section className='favorites'>
+                <h2>Favorite Countries</h2>
+                <p>Please log in to view your favorite countries.</p>
+            </section>
+        );
+    }
 
     if (isLoading) return <div className="loading">Loading favorites...</div>;
 
@@ -40,35 +47,31 @@ const Favorites = () => {
                 <p>You haven't added any favorites yet.</p>
             ) : (
                 <div className='grid'>
-                    {favoriteCountries.map((country) => {
-                        const { cca3, name, population, region, capital, flags } = country;
-                        return (
-                            <article key={cca3}>
-                                <div className="card-container">
-                                    <img src={flags.png} alt={name.common} />
-                                    <div className='details'>
-                                        <h3>{name.common}</h3>
-                                        <h4>Population: <span>{population}</span></h4>
-                                        <h4>Region: <span>{region}</span></h4>
-                                        <h4>Capital: <span>{capital}</span></h4>
-                                    </div>
-                                    <div className='buttons'>
-                                        <Link to={`/countries/${name.common}`} className='btn'>
-                                            Learn more
-                                        </Link>
-                                        <button
-                                            className='btn unfavorite-btn'
-                                            onClick={() => toggleFavorite(cca3)}
-                                            aria-label="Remove from favorites"
-                                            title="Remove from favorites"
-                                        >
-                                            <i className="fas fa-trash-alt"></i>
-                                        </button>
-                                    </div>
+                    {favoriteCountries.map((country) => (
+                        <article key={country.cca3}>
+                            <div className="card-container">
+                                <img src={country.flags.png} alt={country.name.common} />
+                                <div className='details'>
+                                    <h3>{country.name.common}</h3>
+                                    <h4>Population: <span>{country.population}</span></h4>
+                                    <h4>Region: <span>{country.region}</span></h4>
+                                    <h4>Capital: <span>{country.capital}</span></h4>
                                 </div>
-                            </article>
-                        );
-                    })}
+                                <div className='buttons'>
+                                    <Link to={`/countries/${country.name.common}`} className='btn'>
+                                        Learn more
+                                    </Link>
+                                    <button
+                                        className='btn unfavorite-btn'
+                                        onClick={() => toggleFavorite(country.cca3)}
+                                        aria-label="Remove from favorites"
+                                    >
+                                        <i className="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    ))}
                 </div>
             )}
         </section>
